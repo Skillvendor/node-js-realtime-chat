@@ -1,7 +1,7 @@
-import React, { useReducer } from 'react';
+import React from 'react';
 import { useStore } from '../../state-management/stores/store'
 
-const ChatInput = (props) => {
+const ChatInput = () => {
   const [state, setState] = React.useState({ message: '' })
   const globalStore = useStore()
 
