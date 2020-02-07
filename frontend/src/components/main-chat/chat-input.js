@@ -1,15 +1,14 @@
-import React from 'react';
-import openSocket from 'socket.io-client'
+import React, { useReducer } from 'react';
+import { useStore } from '../../state-management/stores/store'
 
 const ChatInput = (props) => {
-  const endpoint = 'http://localhost:5004'
   const [state, setState] = React.useState({ message: '' })
-  const [socketStore, setSocketStore] = React.useState({ socket: openSocket(endpoint) })
+  const globalStore = useStore()
 
   const handleTextChange = (value) => setState({ ...state, message: value })
   const sendMessage = () => {
     console.log(state, 'sending message')
-    socketStore.socket.emit('new-text-message', {
+    globalStore.socket.emit('new-text-message', {
       message: state.message
     })
   }

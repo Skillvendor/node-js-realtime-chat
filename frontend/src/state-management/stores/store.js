@@ -1,12 +1,15 @@
 import React from 'react';
 import messageReducer from '../reducers/messageReducer'
+import openSocket from 'socket.io-client'
 
-const initialState = {};
+const endpoint = 'http://localhost:5004'
+const initialState = { socket: openSocket(endpoint) }
 const Store = React.createContext();
 const Dispatch = React.createContext();
 
-const combinedReducers = ({ messages }, action) => ({
+const combinedReducers = ({ messages, socket }, action) => ({
   messages: messageReducer(messages, action),
+  socket,
 })
 
 function StateProvider({ children }) {

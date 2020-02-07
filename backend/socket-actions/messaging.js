@@ -3,7 +3,6 @@ exports.messagingHandler = socket => {
     console.log('RECEIVING MESSAGE')
     console.log(data)
   })
-
 };
 
 
