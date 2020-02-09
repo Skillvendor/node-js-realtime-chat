@@ -5,11 +5,16 @@ const ChatInput = () => {
   const [state, setState] = React.useState({ message: '' })
   const globalStore = useStore()
 
+  React.useEffect(() => {
+    globalStore.socket.on('message-created', (data) => {
+      console.log('message-created', data)
+    })
+  }, [])
   const handleTextChange = (value) => setState({ ...state, message: value })
   const sendMessage = () => {
     console.log(state, 'sending message')
     globalStore.socket.emit('new-text-message', {
-      message: state.message
+      content: state.message
     })
   }
 
