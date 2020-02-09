@@ -9,7 +9,7 @@ class MessageCreator {
   async call() {
     // should validate first
 
-    this.createdMessage = this.message.save()
+    this.createdMessage = await this.message.save()
     return this.createdMessage
   }
 }
