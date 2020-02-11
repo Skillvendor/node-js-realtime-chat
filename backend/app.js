@@ -4,6 +4,8 @@ const helmet = require('helmet')
 const compression = require('compression')
 const morgan = require('./config/morgan')
 const socket = require('./socket')
+const messageRoutes = require('./routes/messages')
+const channelRoutes = require('./routes/channels')
 
 app.use(express.json())
 app.use(helmet())
@@ -18,6 +20,9 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Headers', '*')
   next();
 })
+
+app.use(messageRoutes)
+app.use(channelRoutes)
 
 const server = app.listen(5004)
 socket.init(server)

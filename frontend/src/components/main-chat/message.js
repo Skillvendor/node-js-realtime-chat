@@ -9,10 +9,10 @@ const Message = (props) => {
         </div>
 
         <div className='message-body'>
-          <div className='message-author'> {props.from} says: </div>
+          <div className='message-author'> {(props.User || {}).name} says: </div>
           <div className='message-text'>
             <p>
-              {props.text}
+              {props.content}
             </p>
           </div>
         </div>

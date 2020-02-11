@@ -1,17 +1,21 @@
 import React from 'react';
 import Message from './message'
+import { getMessagesRequest } from '../../requests/messages'
+import { useStore, useDispatch } from '../../state-management/stores/store'
 
 const Messages = () => {
-  const messages = [
-    {
-      from: 'Lucian',
-      text: 'Hello from lucian'
-    },
-    {
-      from: 'Piscotel',
-      text: 'Hello from piscotel'
-    }
-  ]
+  const { messagesStore } = useStore()
+  const dispatch = useDispatch()
+
+  React.useEffect(() => {
+    const messagesPromise = getMessagesRequest()
+    messagesPromise.then(messages => dispatch({
+      type: 'GET_MESSAGES',
+      messages,
+    }))
+  }, [])
+
+  const messages = (messagesStore.messages[messagesStore.currentChannel] || {}).values || []
 
   return (
     <React.Fragment>

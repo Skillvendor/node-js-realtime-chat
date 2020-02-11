@@ -1,20 +1,36 @@
 import React from 'react';
-import { useStore } from '../../state-management/stores/store'
+import { useStore, useDispatch } from '../../state-management/stores/store'
 
 const ChatInput = () => {
   const [state, setState] = React.useState({ message: '' })
   const globalStore = useStore()
+  const dispatch = useDispatch()
 
   React.useEffect(() => {
     globalStore.socket.on('message-created', (data) => {
-      console.log('message-created', data)
+      dispatch({
+        type: 'NEW_MESSAGE',
+        message: data
+      })
     })
   }, [])
   const handleTextChange = (value) => setState({ ...state, message: value })
   const sendMessage = () => {
-    console.log(state, 'sending message')
+    let currentChannel = globalStore.messagesStore.currentChannel
+    if(currentChannel === 0) {
+      currentChannel = null
+    }
+
     globalStore.socket.emit('new-text-message', {
-      content: state.message
+      content: state.message,
+      channelId: currentChannel,
+    })
+    dispatch({
+      type: 'NEW_MESSAGE',
+      message: {
+        content: state.message,
+        channelId: currentChannel,
+      }
     })
   }
 

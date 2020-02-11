@@ -1,11 +1,25 @@
-export default function messageReducer(state, action) {
+export default function messageReducer(state={}, action) {
+  let channelId = state.currentChannel
+
   switch(action.type) {
-    case 'salutari':
-      console.log('HEY')
-      console.log(state)
-      console.log(action)
-      return state
+    case 'GET_MESSAGES':
+      state.messages[channelId] = {
+        values: [...(state.messages[channelId] || []), ...action.messages],
+        requested: true
+      }
+
+      return { ...state }
+    case 'NEW_MESSAGE':
+      state.messages[channelId] = {
+        ...state.messages[channelId],
+        values: [...(state.messages[channelId].values || []), action.message],
+      }
+
+      return { ...state }
+    case 'CHANNEL_SELECT':
+      console.log('CHANGING CHANNEL', action)
+      return { ...state, currentChannel: action.channel.id}
     default:
-      throw new Error(`Unhandled action type: ${action.type}`);
+      return state
   }
 }

@@ -5,7 +5,6 @@ import ChatInput from './main-chat/chat-input'
 import Members from './room-members/members'
 import MainActions from './top-bar/actions'
 import Profile from './top-bar/profile'
-import { useStore, useDispatch } from '../state-management/stores/store'
 
 const Messenger = () => {
   const [state, setState] = React.useState({ height: window.innerHeight })

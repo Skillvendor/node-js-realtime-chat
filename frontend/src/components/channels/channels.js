@@ -1,13 +1,22 @@
 import React from 'react';
 import Channel from './channel'
+import { getChannelsRequest } from '../../requests/channels'
+import { useStore, useDispatch } from '../../state-management/stores/store'
 
 const Channels = () => {
-  const channels = [
-    {
-      from: 'Lucian, Piscotel',
-      text: 'Hello there...'
-    }
-  ]
+  const globalStore = useStore()
+  const dispatch = useDispatch()
+
+  const channels = (globalStore.channelsStore || {}).channels || []
+
+  React.useEffect(() => {
+    console.log('IS THIS USED?!')
+    const channelsPromise = getChannelsRequest()
+    channelsPromise.then(channels => dispatch({
+      type: 'GET_CHANNELS',
+      channels,
+    }))
+  }, [])
 
   return (
     <React.Fragment>
