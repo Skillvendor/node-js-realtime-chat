@@ -5,6 +5,7 @@ import ChatInput from './main-chat/chat-input'
 import Members from './room-members/members'
 import MainActions from './top-bar/actions'
 import Profile from './top-bar/profile'
+import ChatTitle from './top-bar/chatTitle'
 
 const Messenger = () => {
   const [state, setState] = React.useState({ height: window.innerHeight })
@@ -24,7 +25,7 @@ const Messenger = () => {
           </div>
 
           <div className='content'>
-            <h2> Title </h2>
+            <ChatTitle />
           </div>
           <div className='right'>
             <Profile />

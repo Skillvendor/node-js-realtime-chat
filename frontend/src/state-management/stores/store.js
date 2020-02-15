@@ -9,14 +9,36 @@ const initialState = {
   messagesStore: {
     messages: {},
     currentChannel: 0
-  } }
+  },
+  membersStore: {
+    members: [
+    {
+      id: 1,
+      name: 'Lucian',
+      joined: 'now',
+    },
+    {
+      id: 2,
+      name: 'Piscotel',
+      joined: '1 hour ago',
+    },
+  ]},
+  usersStore: {
+    currentUser: {
+      id: 1,
+      name: 'Lucian',
+    }
+  }
+}
 const Store = React.createContext();
 const Dispatch = React.createContext();
 
-const combinedReducers = ({ channelsStore, messagesStore, socket }, action) => ({
-  messagesStore: messageReducer(messagesStore, action),
-  channelsStore: channelReducer(channelsStore, action),
-  socket,
+const combinedReducers = (store, action) => ({
+  messagesStore: messageReducer(store.messagesStore, action),
+  channelsStore: channelReducer(store.channelsStore, action),
+  membersStore: store.membersStore,
+  usersStore: store.usersStore,
+  socket: store.socket,
 })
 
 function StateProvider({ children }) {

@@ -6,6 +6,7 @@ const morgan = require('./config/morgan')
 const socket = require('./socket')
 const messageRoutes = require('./routes/messages')
 const channelRoutes = require('./routes/channels')
+const authMiddleware = require('./middleware/auth');
 
 app.use(express.json())
 app.use(helmet())
@@ -23,6 +24,17 @@ app.use((req, res, next) => {
 
 app.use(messageRoutes)
 app.use(channelRoutes)
+// app.use(authMiddleware)
+
+app.use((error, req, res, next) => {
+  const {
+    statusCode,
+    message,
+    errorArray
+  } = error
+
+  res.status(statusCode).json({ message: message, errors: errorArray })
+})
 
 const server = app.listen(5004)
 socket.init(server)

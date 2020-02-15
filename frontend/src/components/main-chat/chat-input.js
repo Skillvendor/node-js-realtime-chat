@@ -16,6 +16,9 @@ const ChatInput = () => {
   }, [])
   const handleTextChange = (value) => setState({ ...state, message: value })
   const sendMessage = () => {
+    if(state.message.trim().length === 0) {
+      return
+    }
     let currentChannel = globalStore.messagesStore.currentChannel
     if(currentChannel === 0) {
       currentChannel = null
@@ -32,6 +35,7 @@ const ChatInput = () => {
         channelId: currentChannel,
       }
     })
+    setState({ ...state, message: '' })
   }
 
   return (
@@ -41,11 +45,16 @@ const ChatInput = () => {
           <textarea
             placeholder='write your message here....'
             onChange={(event) => handleTextChange(event.target.value)}
+            onKeyUp={(event) => {
+              if (event.key === 'Enter' && !event.shiftKey) {
+                sendMessage();
+              }
+            }}
             value={state.message}
           />
         </div>
         <div className='actions'>
-          <button onClick={sendMessage}>Send</button>
+          <button onClick={sendMessage} className='send'>Send</button>
         </div>
       </div>
     </React.Fragment>

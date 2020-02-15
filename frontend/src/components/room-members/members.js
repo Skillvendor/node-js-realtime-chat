@@ -1,17 +1,14 @@
 import React from 'react';
 import Member from './member'
+import { useStore, useDispatch } from '../../state-management/stores/store'
 
 const Members = () => {
-  const members = [
-    {
-      name: 'Lucian'
-    }
-  ]
+  const { membersStore } = useStore()
 
   return (
     <React.Fragment>
       <div className='members'>
-        { members.map((el, index) => <Member key={`member_${index}`} {...el}></Member>)}
+        { membersStore.members.map((el, index) => <Member key={`member_${index}`} {...el}></Member>)}
       </div>
     </React.Fragment>
   )
